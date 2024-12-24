@@ -13,7 +13,7 @@ export default function CustomButton({ title, onPress }) {
 
 const styles = StyleSheet.create({   
   button: {
-    width:300,
+    width:350,
     height:50,
     padding: 10,
     borderRadius:20,

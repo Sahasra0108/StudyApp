@@ -33,17 +33,21 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   label: {
-    fontSize: 16,
+    fontSize: 20,
     color: '#333',
-    marginBottom: 5,
+    marginBottom: 10,
+    fontWeight:"bold"
   },
   input: {
-    height: 45,
+    height: 55,
     borderColor: '#ccc',
     borderWidth: 1,
     borderRadius: 8,
     paddingHorizontal: 10,
     fontSize: 16,
+    width:350,
+    backgroundColor:"white",
+    
   },
   errorInput: {
     borderColor: '#ff0000',

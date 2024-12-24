@@ -1,9 +1,12 @@
 import { SafeAreaView,View, Text,StyleSheet,Image} from 'react-native'
 import React from 'react'
-import girl from "../../assets/images/girl.png"
+import girl from "../../assets/images/login.png"
 import CustomButton from "../../components/CustomButton"
+import CustomInput from '../../components/UserInput'
+import { useRouter } from 'expo-router'; 
 
-export default function onboarding() {
+export default function Sign_in() {
+  const router = useRouter();
   return (
     <SafeAreaView style={styles.container}> 
       <View style={styles.innerContainer}>
@@ -11,9 +14,30 @@ export default function onboarding() {
         style={styles.img}
         source={girl}
       />
-        
+      <CustomInput
+        label="Email"
+        placeholder="Enter your email"
+        //value={email}
+        //onChangeText={setEmail}
+        keyboardType="email-address"
+        //error={emailError}
+      />
+
+    <CustomInput
+        label="Password"
+        placeholder="Enter your password"
+        //value={password}
+        //onChangeText={setPassword}
+        secureTextEntry={true}
+        //error={passwordError}
+      />
        <View style={styles.button}>
        <CustomButton title="Log in"/>
+       <Text style={styles.text}>Don't have an account ?{' '}
+        <Text style={styles.link} onPress={() => router.push('(auth)/Sign_up')}>
+          Sign Up
+        </Text> 
+        </Text> 
        </View>
       </View>
     </SafeAreaView> 
@@ -55,6 +79,17 @@ const styles = StyleSheet.create({
     //marginVertical: 20, 
    },
    button: {
-    paddingTop:40
-   }
+    paddingTop:30
+   },
+   text: {
+    paddingTop:15,
+    fontSize:16,
+    textAlign: 'center',
+   },
+   link: {
+    color: '#9400D3',
+    fontWeight: 'bold',
+    textDecorationLine: 'underline'
+  }
+
 })

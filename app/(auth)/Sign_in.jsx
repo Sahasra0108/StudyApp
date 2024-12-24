@@ -1,7 +1,7 @@
 import { SafeAreaView,View, Text,StyleSheet,Image} from 'react-native'
 import React from 'react'
-import girl from "../assets/images/girl.png"
-import CustomButton from "../components/CustomButton"
+import girl from "../../assets/images/girl.png"
+import CustomButton from "../../components/CustomButton"
 
 export default function onboarding() {
   return (
@@ -13,7 +13,7 @@ export default function onboarding() {
       />
         
        <View style={styles.button}>
-       <CustomButton title="Get Started"/>
+       <CustomButton title="Log in"/>
        </View>
       </View>
     </SafeAreaView> 

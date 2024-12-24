@@ -1,27 +1,66 @@
-import { AppRegistry } from 'react-native';
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import onboarding from './onboarding'
-//import SignIn from './screens/SignIn';  // SignIn Screen
- 
+import { SafeAreaView,View, Text,StyleSheet,Image} from 'react-native'
+import React from 'react'
+import girl from "../assets/images/girl.png"
+import CustomButton from "../components/CustomButton"
+import { useRouter } from 'expo-router'; 
 
-// Create a Stack Navigator
-const Stack = createStackNavigator();
-
-export default function index() {
+export default function onboarding() {
+  const router = useRouter();
+  const handleGetStarted = () => {
+    router.push('(auth)/Sign_in'); 
+  };
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Onboarding">
-        <Stack.Screen 
-          name="Onboarding" 
-          component={onboarding} 
-          options={{ headerShown: false }}  // Optional to hide header for Onboarding
-        />
-         
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+    <SafeAreaView style={styles.container}> 
+      <View style={styles.innerContainer}>
+      <Image
+        style={styles.img}
+        source={girl}
+      />
+       <Text style={styles.title}>Welcome to StudyBuddy!</Text>
+       <Text style={styles.subtitle}>Your ultimate companion for goal setting and study success.</Text>
+       <View style={styles.button}>
+       <CustomButton title="Get Started" onPress={handleGetStarted}/>
+       </View>
+      </View>
+    </SafeAreaView> 
+  )
 }
 
- 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,  
+    backgroundColor: '#E0B0FF',
+    padding:10
+  },
+  innerContainer: {
+    flex: 1,
+    //justifyContent: 'center',
+    alignItems: 'center',  
+  },
+  img:{
+    width: 450,  
+    height:400,
+    resizeMode: 'contain',  
+    borderRadius: 10,  
+    margin: 20,   
+
+  },
+
+  title: {
+    fontSize: 28, 
+    fontWeight: 'bold',  
+    color: '#9400D3',  
+    textAlign: 'center',  
+    marginVertical: 20, 
+  },
+   subtitle: {
+    fontSize: 16, 
+    fontWeight: 'bold',  
+    //color: '#4A90E2',  
+    textAlign: 'center',  
+    //marginVertical: 20, 
+   },
+   button: {
+    paddingTop:40
+   }
+})

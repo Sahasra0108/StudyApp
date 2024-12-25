@@ -7,6 +7,9 @@ import { useRouter } from 'expo-router';
 
 export default function Sign_in() {
   const router = useRouter();
+  const handleonpress = () => {
+    router.push('/Homepage'); 
+  };
   return (
     <SafeAreaView style={styles.container}> 
       <View style={styles.innerContainer}>
@@ -32,7 +35,7 @@ export default function Sign_in() {
         //error={passwordError}
       />
        <View style={styles.button}>
-       <CustomButton title="Log in"/>
+       <CustomButton title="Log in" onPress={handleonpress}/>
        <Text style={styles.text}>Don't have an account ?{' '}
         <Text style={styles.link} onPress={() => router.push('(auth)/Sign_up')}>
           Sign Up

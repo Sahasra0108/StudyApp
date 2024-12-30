@@ -12,7 +12,7 @@ import axios from "axios";
 import { FloatingAction } from "react-native-floating-action";
 import SubjectDropdown from "../components/Dropdown";
 
-// Create Context to store the count of clicked items
+
 const ClickCountContext = createContext();
 
 // Custom Hook to use click count context
@@ -57,7 +57,8 @@ const HomePage = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>Today’s Suggested Books</Text>
+      <Text style={styles.maintitle}></Text>
+      <Text style={styles.title}>Recommended Reads for You Today</Text>
 
       <View style={styles.bookList}>
         {books.map((book) => (
@@ -81,7 +82,7 @@ const HomePage = () => {
               {book.volumeInfo.description
                 ? `${book.volumeInfo.description.split(".")[0]}...`
                 : "No description available"}
-            </Text>
+            </Text>Hi Sachini, welcome back!
             <Text style={styles.bookStatus}>
               {book.saleInfo.saleability === "FOR_SALE"
                 ? "Available for Sale"
@@ -127,10 +128,17 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: "#E0B0FF",
   },
-  title: {
-    fontSize: 24,
+  maintitle: {
+    fontSize: 18,
     fontWeight: "bold",
     marginBottom: 20,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 20,
+    textAlign: "center",
+    color:"#6A0DAD"
   },
   subjectSelector: {
     marginBottom: 20,

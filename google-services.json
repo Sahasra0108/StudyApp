@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "504082197043",
+    "project_id": "studyapp-cce71",
+    "storage_bucket": "studyapp-cce71.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:504082197043:android:666b06d4d8131680885146",
+        "android_client_info": {
+          "package_name": "com.sachini.studyapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFT26ETajAyBE6UES5zZw8IVZj5iniXFw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -16,8 +16,8 @@ export default function onboarding() {
         style={styles.img}
         source={girl}
       />
-       <Text style={styles.title}>Welcome to StudyBuddy!</Text>
-       <Text style={styles.subtitle}>Your ultimate companion for goal setting and study success.</Text>
+       <Text style={styles.title}>Welcome to BookBridge!</Text>
+       <Text style={styles.subtitle}>Bridging the gap between curiosity and understanding, one page at a time.</Text>
        <View style={styles.button}>
        <CustomButton title="Get Started" onPress={handleGetStarted}/>
        </View>

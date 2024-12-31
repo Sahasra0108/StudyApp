@@ -9,20 +9,20 @@ A React Native application designed to enhance learning by recommending educatio
 
 1.Clone the repository
  ```bash
-    https://github.com/Sahasra0108/StudyApp.git
+ https://github.com/Sahasra0108/StudyApp.git
    ```
 2.Navigate to the project directory
 ```bash
- cd study-app
+cd study-app
 ```
 3. Install dependencies
 ```bash
-  npm install
+npm install
 
 ```
 4.Run the app
 ```bash
-  npx expo start
+npx expo start
 
 ```
 

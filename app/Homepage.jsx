@@ -6,21 +6,20 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
-  Button,
 } from "react-native";
 import axios from "axios";
 import { FloatingAction } from "react-native-floating-action";
-import SubjectDropdown from "../components/Dropdown";
-
+import { useLocalSearchParams } from "expo-router";
+import { auth } from "./firebase";
+import { getAuth, signOut } from "firebase/auth";
+import { Alert } from "react-native";
+import { useRouter } from "expo-router";
+import logout from "../assets/images/logout (2).png";
 
 const ClickCountContext = createContext();
 
-// Custom Hook to use click count context
-const useClickCount = () => {
-  return useContext(ClickCountContext);
-};
+const useClickCount = () => useContext(ClickCountContext);
 
-// Provider Component for managing and providing click count state
 const ClickCountProvider = ({ children }) => {
   const [clickCount, setClickCount] = useState(0);
 
@@ -36,8 +35,21 @@ const ClickCountProvider = ({ children }) => {
 };
 
 const HomePage = () => {
+  const router = useRouter();
   const [books, setBooks] = useState([]);
   const { clickCount, incrementClickCount } = useClickCount();
+  const { name } = useLocalSearchParams();
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      Alert.alert("Success", "You have logged out successfully!");
+      router.push("(auth)/Sign_in");
+    } catch (error) {
+      console.error(error);
+      Alert.alert("Error", "An error occurred while logging out.");
+    }
+  };
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -45,7 +57,6 @@ const HomePage = () => {
         const response = await axios.get(
           `https://www.googleapis.com/books/v1/volumes?q=education&maxResults=10`
         );
-        console.log(response.data.items);
         setBooks(response.data.items);
       } catch (error) {
         console.error(error);
@@ -56,72 +67,71 @@ const HomePage = () => {
   }, []);
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.maintitle}></Text>
-      <Text style={styles.title}>Recommended Reads for You Today</Text>
+    <View>
+      <ScrollView contentContainerStyle={styles.container}>
+        <Text style={styles.maintitle}>Hi {name}, Welcome back!</Text>
+        <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+          <Image source={logout} style={styles.logut} />
+        </TouchableOpacity>
+        <Text style={styles.title}>Recommended Reads for You Today</Text>
 
-      <View style={styles.bookList}>
-        {books.map((book) => (
-          <TouchableOpacity
-            key={book.id}  
-            style={styles.card}
-            onPress={() => incrementClickCount()}  
-          >
-            <Image
-              source={{
-                uri:
-                  book.volumeInfo.imageLinks?.thumbnail || "default-image-url",
-              }} // Use the thumbnail image from 'volumeInfo'
-              style={styles.bookImage}
-            />
-            <Text style={styles.bookTitle}>{book.volumeInfo.title}</Text>
-            <Text style={styles.bookAuthor}>
-              {book.volumeInfo.authors?.[0] || "Unknown Author"}
-            </Text>
-            <Text style={styles.bookDescription}>
-              {book.volumeInfo.description
-                ? `${book.volumeInfo.description.split(".")[0]}...`
-                : "No description available"}
-            </Text>Hi Sachini, welcome back!
-            <Text style={styles.bookStatus}>
-              {book.saleInfo.saleability === "FOR_SALE"
-                ? "Available for Sale"
-                : "Not For Sale"}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </View>
+        <View style={styles.bookList}>
+          {books.map((book) => (
+            <TouchableOpacity
+              key={book.id}
+              style={styles.card}
+              onPress={() => incrementClickCount()}
+            >
+              <Image
+                source={{
+                  uri:
+                    book.volumeInfo.imageLinks?.thumbnail ||
+                    "default-image-url",
+                }}
+                style={styles.bookImage}
+              />
+              <Text style={styles.bookTitle}>{book.volumeInfo.title}</Text>
+              <Text style={styles.bookAuthor}>
+                {book.volumeInfo.authors?.[0] || "Unknown Author"}
+              </Text>
+              <Text style={styles.bookDescription}>
+                {book.volumeInfo.description
+                  ? `${book.volumeInfo.description.split(".")[0]}...`
+                  : "No description available"}
+              </Text>
+              <Text style={styles.bookStatus}>
+                {book.saleInfo.saleability === "FOR_SALE"
+                  ? "Available for Sale"
+                  : "Not For Sale"}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      </ScrollView>
 
-      {/* Floating Action Button */}
-       
       <FloatingAction
         actions={[
           {
-            text: `Item Clicks: ${clickCount}`,
-            //icon: require('./assets/icon.png'), // You can replace it with your custom icon
+            text: `Books Checked: ${clickCount}`,
+            icon: require("../assets/images/open_bokk.png"),
             name: "bt_item_clicks",
-            position:"1",
+            position: 1,
             textStyle: styles.actionText,
           },
         ]}
-        onPressItem={(name) => console.log(name)}
-        color="#9400D3"  
+        color="#9400D3"
         buttonSize={60}
         distanceToEdge={30}
-         
       />
-       
-    </ScrollView>
+    </View>
   );
 };
 
-const App = () => {
-  return (
-    <ClickCountProvider>
-      <HomePage />
-    </ClickCountProvider>
-  );
-};
+export default () => (
+  <ClickCountProvider>
+    <HomePage />
+  </ClickCountProvider>
+);
 
 const styles = StyleSheet.create({
   container: {
@@ -129,7 +139,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#E0B0FF",
   },
   maintitle: {
-    fontSize: 18,
+    fontSize: 19,
     fontWeight: "bold",
     marginBottom: 20,
   },
@@ -138,13 +148,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 20,
     textAlign: "center",
-    color:"#6A0DAD"
-  },
-  subjectSelector: {
-    marginBottom: 20,
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-around",
+    color: "#6A0DAD",
   },
   bookList: {
     flexDirection: "row",
@@ -196,11 +200,15 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   actionText: {
-    fontSize: 16,
-    color: '#9400D3',   
-    fontWeight: 'bold',   
+    fontSize: 19,
+    color: "#9400D3",
+    fontWeight: "bold",
   },
-   
+  logut: {
+    height: 30,
+    width: 30,
+    position: "absolute",
+    right: 20,
+    bottom: 20,
+  },
 });
-
-export default App;

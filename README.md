@@ -3,7 +3,7 @@
 A React Native application designed to enhance learning by recommending educational books and providing a personalized experience for users.
 
 ##  Screenshots 📸
- 
+ ![githubimage](https://github.com/user-attachments/assets/8e82e5b0-a605-4ffd-a616-c8083668320e)
 
 ##  Installation 🛠️
 
